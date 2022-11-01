@@ -10,6 +10,11 @@ bg_surf = pygame.image.load('graphics/background.png').convert()
 
 # Converts file to something pygame understands
 ship_surf = pygame.image.load('graphics/ship.png').convert_alpha()
+ship_y_pos = 500
+
+font = pygame.font.Font('graphics/subatomic.ttf', 50)
+text_surf = font.render('Space', True, 'White')
+
 
 
 while True:
@@ -18,8 +23,10 @@ while True:
             pygame.quit()
             sys.exit()
 
-    display_surface.fill((200, 200, 200))
+    display_surface.fill((0, 0, 0))
     display_surface.blit(bg_surf, (0, 0))
-    display_surface.blit(ship_surf, (300, 500))
+    ship_y_pos -= 1
+    display_surface.blit(ship_surf, (300, ship_y_pos))
+    display_surface.blit(text_surf, (500, 200))
 
     pygame.display.update()
