@@ -5,6 +5,7 @@ pygame.init()
 WINDOW_WIDTH, WINDOW_HEIGHT = 1280, 720
 display_surface = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
 pygame.display.set_caption('Astroids')
+clock = pygame.time.Clock()
 
 bg_surf = pygame.image.load('graphics/background.png').convert()
 
@@ -23,9 +24,12 @@ while True:
             pygame.quit()
             sys.exit()
 
+    # Frame rate limit
+    clock.tick(120)
+
     display_surface.fill((0, 0, 0))
     display_surface.blit(bg_surf, (0, 0))
-    ship_y_pos -= 1
+    ship_y_pos -= 4
     display_surface.blit(ship_surf, (300, ship_y_pos))
     display_surface.blit(text_surf, (500, 200))
 
