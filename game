@@ -64,6 +64,12 @@ meteor_list = []
 meteor_timer = pygame.event.custom_type()
 pygame.time.set_timer(meteor_timer, 500)
 
+# import sound
+laser_sound = pygame.mixer.Sound('sounds/laser.ogg')
+explosion_sound = pygame.mixer.Sound('sounds/explosion.wav')
+background_music = pygame.mixer.Sound('sounds/music.wav')
+background_music.play(loops = -1)
+
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -76,6 +82,7 @@ while True:
             # timer
             can_shoot = False
             shoot_time = pygame.time.get_ticks()
+            laser_sound.play()
 
         if event.type == meteor_timer:
             # random positions
@@ -101,6 +108,20 @@ while True:
     meteor_update(meteor_list)
     can_shoot = laser_timer(can_shoot, 400)
     
+    # meteor ship collisions
+    for meteor_tuple in meteor_list:
+        meteor_rect = meteor_tuple[0]
+        if ship_rect.colliderect(meteor_rect):
+            pygame.quit()
+            sys.exit()
+
+    for laser_rect in laser_list:
+        for meteor_tuple in meteor_list:
+            if laser_rect.colliderect(meteor_tuple[0]):
+                meteor_list.remove(meteor_tuple)
+                laser_list.remove(laser_rect)
+                explosion_sound.play()
+
     # Drawing
     display_surface.fill((0, 0, 0))
     display_surface.blit(bg_surf, (0, 0))
