@@ -30,13 +30,13 @@ while True:
             sys.exit()
 
     # Frame rate limit
-    clock.tick(120)
+    dt = clock.tick(120) / 1000 # deltatime = px/frame / ms
 
     # mouse input
     ship_rect.center = pygame.mouse.get_pos()
 
     # update
-    laser_rect.y -= 10
+    laser_rect.y -= round(200 * dt)
 
     # Drawing
     display_surface.fill((0, 0, 0))
